@@ -99,14 +99,18 @@ prepare_test_working_directory()
 {
   mkdir -p "${TEST_WORKING_DIRECTORY}"
   mkdir -p "${TEST_WORKING_DIRECTORY}/bin"
+  mkdir -p "${TEST_WORKING_DIRECTORY}/spec"
   if [ "${file_source_location}" == "working_directory" ]; then
+    cp .shellspec "${TEST_WORKING_DIRECTORY}/.shellspec"
     cp bin/capture_stdout_and_stderr.sh "${TEST_WORKING_DIRECTORY}/bin/capture_stdout_and_stderr.sh"
+    cp -r spec "${TEST_WORKING_DIRECTORY}/spec"
   fi
   if [ "${file_source_location}" == "staging_area" ]; then
+    git show :.shellspec > "${TEST_WORKING_DIRECTORY}/.shellspec"
     git show :bin/capture_stdout_and_stderr.sh > "${TEST_WORKING_DIRECTORY}/bin/capture_stdout_and_stderr.sh"
+    git show :spec/spec_helper.sh > "${TEST_WORKING_DIRECTORY}/spec/spec_helper.sh"
+    git show :spec/capture_stdout_and_stderr_spec.sh > "${TEST_WORKING_DIRECTORY}/spec/capture_stdout_and_stderr_spec.sh"
   fi
-  cp .shellspec "${TEST_WORKING_DIRECTORY}/.shellspec"
-  cp -r spec "${TEST_WORKING_DIRECTORY}/spec"
 }
 
 report_all_errors()
