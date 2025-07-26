@@ -103,7 +103,7 @@ prepare_test_working_directory()
   if [ "${file_source_location}" == "working_directory" ]; then
     cp .shellspec "${TEST_WORKING_DIRECTORY}/.shellspec"
     cp bin/capture_stdout_and_stderr.sh "${TEST_WORKING_DIRECTORY}/bin/capture_stdout_and_stderr.sh"
-    cp -r spec "${TEST_WORKING_DIRECTORY}/spec"
+    cp -r spec "${TEST_WORKING_DIRECTORY}"
   fi
   if [ "${file_source_location}" == "staging_area" ]; then
     git show :.shellspec > "${TEST_WORKING_DIRECTORY}/.shellspec"
