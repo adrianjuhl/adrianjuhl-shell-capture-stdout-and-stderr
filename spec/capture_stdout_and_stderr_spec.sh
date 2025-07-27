@@ -1,6 +1,14 @@
 
 script_under_test="bin/capture_stdout_and_stderr.sh"
 
+simple_function_hello_goodbye_7()
+  # outputs "hello" to stdout, "goodbye" to stderr, and sets exit status to 7
+{
+  printf "hello"
+  printf "goodbye" >&2
+  return 7
+}
+
 # Verify that:
 #   - the named variable to capture stdout is populated
 #   - the named variable to capture stderr is populated
@@ -15,13 +23,13 @@ Describe "capture_stdout_and_stderr"
     When call capture_stdout_and_stderr stdout_capture stderr_capture simple_function_hello_goodbye_7
     The variable stdout_capture should be present
     The variable stderr_capture should be present
-    The status should equal 0
+    The status should equal 7
   End
   It "should populate the named capture variables with the expected values"
     When call capture_stdout_and_stderr foovar barvar simple_function_hello_goodbye_7
     The variable foovar should be present
     The variable barvar should be present
-    The status should equal 0
+    The status should equal 7
   End
   It "should exit with non-zero status if called with zero parameters"
     When call capture_stdout_and_stderr
@@ -42,7 +50,7 @@ Describe "capture_stdout_and_stderr_help"
   It "should output help information"
     When call capture_stdout_and_stderr_help
     The stdout should include "capture_stdout_and_stderr"
-    The stdout should include "Version 0.4.0"
+    The stdout should include "Version 0.5.0"
     The stdout should include "For usage information call: capture_stdout_and_stderr_help_usage"
     The status should equal 0
   End
@@ -57,11 +65,3 @@ Describe "capture_stdout_and_stderr_help_usage"
     The status should equal 0
   End
 End
-
-simple_function_hello_goodbye_7()
-  # outputs "hello" to stdout, "goodbye" to stderr, and sets exit status to 7
-{
-  printf "hello"
-  printf "goodbye" >&2
-  return 7
-}
