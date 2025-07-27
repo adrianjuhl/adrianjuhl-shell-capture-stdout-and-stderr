@@ -2,14 +2,26 @@
 
 capture_stdout_and_stderr()
 {
-  IFS=$'\n' read -r -d '' "${1}" < <(printf 'asdf\0')
-  IFS=$'\n' read -r -d '' "${2}" < <(printf 'asdf\0')
+  local stdout_variable_name
+  local stderr_variable_name
+  stdout_variable_name="${1}"
+  stderr_variable_name="${2}"
+  if [ -z "${stdout_variable_name}" ]; then
+    echo >&2 "Error: [in capture_stdout_and_stderr()] Missing required first parameter (stdout variable name)"
+    return 1
+  fi
+  if [ -z "${stderr_variable_name}" ]; then
+    echo >&2 "Error: [in capture_stdout_and_stderr()] Missing required second parameter (stderr variable name)"
+    return 1
+  fi
+  IFS=$'\n' read -r -d '' "${stdout_variable_name}" < <(printf 'asdf\0')
+  IFS=$'\n' read -r -d '' "${stderr_variable_name}" < <(printf 'asdf\0')
 }
 
 capture_stdout_and_stderr_help()
 {
   echo "capture_stdout_and_stderr"
-  echo "Version 0.3.0"
+  echo "Version 0.4.0"
   echo "For usage information call: capture_stdout_and_stderr_help_usage"
 }
 
