@@ -74,7 +74,7 @@ shellspec_script()
     ERROR_CODE="1ddcf0f9-860d-4c4c-8f3e-0f66732de8f1"
     ERROR_MESSAGE="The script did not pass shellspec. (Error code ${ERROR_CODE})"
     ERROR_MESSAGES+=("${ERROR_MESSAGE}")
-    ERROR_CODES+="${ERROR_CODE}"
+    ERROR_CODES+=("${ERROR_CODE}")
   fi
   echo "Completed shellspec."
 }
@@ -90,7 +90,7 @@ shellcheck_script()
     ERROR_CODE="e1e9e37f-f646-4bf4-9ce2-dc101d27a267"
     ERROR_MESSAGE="The script did not pass shellcheck. (Error code ${ERROR_CODE})"
     ERROR_MESSAGES+=("${ERROR_MESSAGE}")
-    ERROR_CODES+="${ERROR_CODE}"
+    ERROR_CODES+=("${ERROR_CODE}")
   fi
   echo "Completed shellcheck."
 }
@@ -184,6 +184,15 @@ initialize()
   initialize_true_and_false_strings
 }
 
+initialize_abort_script_config()
+{
+  # Exit shell script from within the script or from any subshell within this script - adapted from:
+  # https://cravencode.com/post/essentials/exit-shell-script-from-subshell/
+  # Exit with exit status 1 if this (top level process of this script) receives the SIGUSR1 signal.
+  # See also the abort_script() function which sends the signal.
+  trap "exit 1" SIGUSR1
+}
+
 initialize_this_script_directory_variable()
 {
   # Determines the value of THIS_SCRIPT_DIRECTORY, the absolute directory name where this script resides.
@@ -227,15 +236,6 @@ initialize_true_and_false_strings()
   # where previously 'my_boolean_var' is set to either ${TRUE_STRING} or ${FALSE_STRING}
   TRUE_STRING="true"
   FALSE_STRING="false"
-}
-
-initialize_abort_script_config()
-{
-  # Exit shell script from within the script or from any subshell within this script - adapted from:
-  # https://cravencode.com/post/essentials/exit-shell-script-from-subshell/
-  # Exit with exit status 1 if this (top level process of this script) receives the SIGUSR1 signal.
-  # See also the abort_script() function which sends the signal.
-  trap "exit 1" SIGUSR1
 }
 
 abort_script()

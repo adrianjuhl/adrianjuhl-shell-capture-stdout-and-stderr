@@ -1,18 +1,16 @@
-# Shell capture standard out and standard error
+# Capture standard out and standard error
 
-A shell script that provides a function that is able to capture the standard out and standard error of another call.
-
-# Development
-
-## Initialization of development environment
-
-**Importantant**
-
-See [here](doc/git/README.md) for information on initializing the git hooks included in this project, and additional information about the git hooks included in this project.
+Capture the standard out and standard error of another command.
 
 ## License
 
 MIT
+
+## See also
+
+To install this script using ansible, see the following ansible role:
+- [adrianjuhl.shell_capture_stdout_and_stderr](https://galaxy.ansible.com/ui/standalone/roles/adrianjuhl/shell_capture_stdout_and_stderr/) (Ansible Galaxy)
+- [adrianjuhl.ansible-role-shell-capture-stdout-and-stderr](https://github.com/adrianjuhl/ansible-role-shell-capture-stdout-and-stderr) (source code repository)
 
 ## Author Information
 
