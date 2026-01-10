@@ -51,25 +51,24 @@ __capture_stdout_and_stderr()
     IFS=$'\n' read -r -d '' "return_status";
     return "${return_status}";
   } < <(
-          set +x # Turn off 'xtrace' in this sub-shell that runs and captures the stdout and stderr of the command as the trace output conflicts and gets intermingled with the command's stderr.
+        {
           {
             {
               {
-                {
-                  "${@}" 1>&11 2>&12
-                  echo "${?}" 1>&13
-                } 11>&1 | eval "${sanitize_command}" | xargs -0 printf '%s\0' 1>&11
-              } 12>&1 | eval "${sanitize_command}" | xargs -0 printf '%s\0' 1>&12
-            } 13>&1 | xargs -0 printf '%s\0' 1>&13
-          } 11>&1 12>&1 13>&1
-       )
+                "${@}" 1>&11 2>&12
+                echo "${?}" 1>&13
+              } 11>&1 | eval "${sanitize_command}" | xargs -0 printf '%s\0' 1>&11
+            } 12>&1 | eval "${sanitize_command}" | xargs -0 printf '%s\0' 1>&12
+          } 13>&1 | xargs -0 printf '%s\0' 1>&13
+        } 11>&1 12>&1 13>&1
+      )
 }
 
 capture_stdout_and_stderr_help()
 {
   cat <<HELP_TEXT
 capture_stdout_and_stderr
-Version 0.6.0
+Version 0.7.0
 For usage information call: capture_stdout_and_stderr_help_usage
 HELP_TEXT
 }

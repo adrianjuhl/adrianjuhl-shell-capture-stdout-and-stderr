@@ -40,6 +40,7 @@ test_capture_stdout_and_stderr()
   init_test_context
   shellspec_script
   shellcheck_script
+  #check_behaviour_with_xtrace
   report_all_errors
   exit_with_error_code_if_any_errors_occurred
 }
@@ -93,6 +94,27 @@ shellcheck_script()
     ERROR_CODES+=("${ERROR_CODE}")
   fi
   echo "Completed shellcheck."
+}
+
+check_behaviour_with_xtrace()
+{
+  source bin/capture_stdout_and_stderr.sh
+  # Use one of the other to check behaviour.
+  set -x
+  #set +x
+  capture_stdout_and_stderr mystdout mystderr check_behaviour_with_xtrace_support_function_brown_tan_34
+  set +x
+  echo ">>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>"
+  echo "mystdout is: >>${mystdout}<<"
+  echo "mystderr is: >>${mystderr}<<"
+}
+
+check_behaviour_with_xtrace_support_function_brown_tan_34()
+  # outputs "brown" to stdout, "tan" to stderr, and returns 34
+{
+  printf "brown"
+  printf "tan" >&2
+  return 34
 }
 
 prepare_test_working_directory()

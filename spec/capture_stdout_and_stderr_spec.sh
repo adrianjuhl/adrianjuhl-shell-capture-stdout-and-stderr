@@ -133,7 +133,7 @@ Describe "capture_stdout_and_stderr_help"
   It "should output help information"
     When call capture_stdout_and_stderr_help
     The stdout should include "capture_stdout_and_stderr"
-    The stdout should include "Version 0.6.0"
+    The stdout should include "Version 0.7.0"
     The stdout should include "For usage information call: capture_stdout_and_stderr_help_usage"
     The status should equal 0
   End
